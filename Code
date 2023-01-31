@@ -1,0 +1,54 @@
+-- This is a project I built to help starter scripters get things and use things a little easier.
+-- Have fun :)
+local player = game.Players.LocalPlayer
+local TS = game:GetService("TweenService")
+
+local HumRootPart = player.Character.HumanoidRootPart
+local Humanoid = player.Character.HumanoidRootPart
+
+-- // Tp And Tween Section
+function TpToV3(x, y, z)
+    task.spawn(function()
+        Humanoid:PivotTo(CFrame.new(x, y, z))
+    end)
+end
+
+function tweenToSpeed(x, y, z)
+    task.spawn(function()
+        local targetPos = CFrame.new(x, y, z)
+        local distance = (player.Character.HumanoidRootPart.Position - targetPos.Position).Magnitude
+        local time = distance / 100 -- Speed
+
+        local tween = TS:Create(player.Character.HumanoidRootPart, TweenInfo.new(time, Enum.EasingStyle.Linear), {
+            CFrame = targetPos
+        })
+        tween:Play()
+    end)
+end
+
+function tweenToTime(x, y, z, seconds)
+    task.spawn(function()
+        local tween = TS:Create(player.Character.HumanoidRootPart, TweenInfo.new(seconds, Enum.EasingStyle.Linear), {
+            CFrame = CFrame.new(x, y, z)
+        })
+        tween:Play()
+    end)
+end
+
+-- // Copy Cordinates Section
+function CopyCFrameCordinates()
+    task.spawn(function()
+        setclipboard(tostring(HumRootPart.CFrame))
+    end)
+end
+
+function CopyV3Cordinates()
+    task.spawn(function()
+        local number = tostring(HumRootPart.CFrame)
+        local string = tostring(number) -- or the string functions wont work
+        local x = string.split(string, ",")[1] -- gets the first word before (.)
+        local y = string.split(string, ",")[2]
+        local z = string.split(string, ",")[3]
+        setclipboard(x .. ", " .. y .. ", " .. z)
+    end)
+end
