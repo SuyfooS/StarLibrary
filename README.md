@@ -3,7 +3,5 @@ A Scripting Library to help your scripts look cleaner and also help you if you o
 
 ## How To Boot The Library
 ```lua
-function blua()
-
-end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/WanHubMan/StarLibrary/main/Code?token=GHSAT0AAAAAAB6FWEPPLUNM5MM2QWOTMRPWY6ZQ6PA"))()
 ```
