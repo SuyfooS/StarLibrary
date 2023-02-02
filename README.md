@@ -21,3 +21,12 @@ TweenTo(x, y, z, type, seconds_speed) -- x, y and z are the cordinates and types
 
 TweenTo(536, 29, 60, "Time", 50) -- seconds_speed is the time or the speed, depends on what type you selected !
 ```
+
+Copy Cordinates :
+```lua
+--You can use this to copy cordinates quick,
+CopyCordinates(cf_v3) -- here you should write if you want to copy the whole "CFrame" number or "Vector3"!
+for example :
+CopyCordinates("Vector3") -- Should bring 3 numbers like : 305, 693, 52
+-- Vector3 is also the default so you can put nothing in it too
+```
