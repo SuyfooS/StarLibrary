@@ -33,7 +33,6 @@ CopyCordinates("Vector3") -- Should bring 3 numbers like : 305, 693, 52
 -- Vector3 is also the default so you can put nothing in it too
 ```
 
-## Functional Ways To Use :
 Change WalkSpeed & JumpPower :
 ```lua
 -- Pretty simple.
@@ -54,4 +53,14 @@ HopServer() -- Will hop a server
 Rejoin() -- Will rejoin the same server
 ToggleNoclip(boolean) -- put here true or false to set noclip true or false
 SendMessage(text) -- will send the message you write in the chat
+```
+
+## Functional Ways To Use :
+
+```lua
+getPlayerCFrame() -- Will return the cframe of the player
+getPlayerPosition() -- Will return the Position of the player
+
+getInstanceCFrame(Instance) -- Will return the cframe of the instance you put inside of the function call
+getInstancePosition(Instance) -- Will return the Position of the instance you put inside of the function call
 ```
