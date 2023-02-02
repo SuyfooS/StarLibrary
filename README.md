@@ -37,3 +37,11 @@ Change WalkSpeed & JumpPower :
 ChangeWalkSpeed(number) -- put in "number" the number of speed you want to change to
 ChangeJumpPower(number) -- Same here
 ```
+
+Fly :
+```lua
+-- You can use this to toggle off and on flying
+ToggleFly() -- Will toggle fly, on and off 
+-- To set fly max speed you can do :
+FlyMaxSpeed(number) -- put here the number of speed you want :)
+```
