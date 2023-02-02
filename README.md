@@ -33,6 +33,7 @@ CopyCordinates("Vector3") -- Should bring 3 numbers like : 305, 693, 52
 -- Vector3 is also the default so you can put nothing in it too
 ```
 
+## Functional Ways To Use :
 Change WalkSpeed & JumpPower :
 ```lua
 -- Pretty simple.
