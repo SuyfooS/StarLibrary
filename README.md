@@ -26,7 +26,14 @@ Copy Cordinates :
 ```lua
 --You can use this to copy cordinates quick,
 CopyCordinates(cf_v3) -- here you should write if you want to copy the whole "CFrame" number or "Vector3"!
-for example :
+-- for example :
 CopyCordinates("Vector3") -- Should bring 3 numbers like : 305, 693, 52
 -- Vector3 is also the default so you can put nothing in it too
+```
+
+Change WalkSpeed & JumpPower :
+```lua
+-- Pretty simple.
+ChangeWalkSpeed(number) -- put in "number" the number of speed you want to change to
+ChangeJumpPower(number) -- Same here
 ```
