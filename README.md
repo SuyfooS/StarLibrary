@@ -45,3 +45,10 @@ ToggleFly() -- Will toggle fly, on and off
 -- To set fly max speed you can do :
 FlyMaxSpeed(number) -- put here the number of speed you want :)
 ```
+Some Misc Features :
+```lua
+HopServer() -- Will hop a server 
+Rejoin() -- Will rejoin the same server
+ToggleNoclip(boolean) -- put here true or false to set noclip true or false
+SendMessage(text) -- will send the message you write in the chat
+```
