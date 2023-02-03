@@ -65,3 +65,10 @@ getPlayerPosition() -- Will return the Position of the player
 getInstanceCFrame(Instance) -- Will return the cframe of the instance you put inside of the function call
 getInstancePosition(Instance) -- Will return the Position of the instance you put inside of the function call
 ```
+
+More Functional Ways :
+```lua
+FindAllDescendants(Name, Path, IsA) -- Search from all the descendants from the path you selected to find the object that you selected the name of, the third parameter is optional, its checking if the part that has been found is a "Part", "Text", "Model" or "Animation".
+
+FindAllChilds(Name, Path, IsA) -- same for here but its only childrens
+```
