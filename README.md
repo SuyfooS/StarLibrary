@@ -57,6 +57,7 @@ MaxBrightness() -- Sets the brightnes to max, It will just make everywhere dark 
 FPSCounter(boolean) -- true/false, will create a new fps & ping counter on the screen, you can disable it and enable it always
 LowQuality() -- will make the game a lot less laggy, and will make it ugly af
 KillPlayer() -- will kill the local player
+ToggleNoclip(boolean) -- set to true or false depends if you want noclip on or off
 ```
 
 ## Functional Ways To Use :
