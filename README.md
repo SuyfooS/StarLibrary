@@ -71,6 +71,9 @@ getInstanceCFrame(Instance) -- Will return the cframe of the instance you put in
 getInstancePosition(Instance) -- Will return the Position of the instance you put inside of the function call
 ```
 
+```lua
+getDistance(path1, path2) -- will return the distance between 1 point(path) to the 2 point(path).
+```
 More Functional Ways :
 ```lua
 FindAllDescendants(Name, Path, IsA) -- Search from all the descendants from the path you selected to find the object that you selected the name of,
