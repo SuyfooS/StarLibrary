@@ -60,6 +60,7 @@ SendMessage(text) -- will send the message you write in the chat
 ```lua
 getPlayerCFrame() -- Will return the cframe of the player
 getPlayerPosition() -- Will return the Position of the player
+-- You can also put a player's name inside of the function call to get his cframe, leave empty if you want the local player
 
 getInstanceCFrame(Instance) -- Will return the cframe of the instance you put inside of the function call
 getInstancePosition(Instance) -- Will return the Position of the instance you put inside of the function call
