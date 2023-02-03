@@ -53,6 +53,10 @@ HopServer() -- Will hop a server
 Rejoin() -- Will rejoin the same server
 ToggleNoclip(boolean) -- put here true or false to set noclip true or false
 SendMessage(text) -- will send the message you write in the chat
+MaxBrightness() -- Sets the brightnes to max, It will just make everywhere dark to not dark
+FPSCounter(boolean) -- true/false, will create a new fps & ping counter on the screen, you can disable it and enable it always
+LowQuality() -- will make the game a lot less laggy, and will make it ugly af
+KillPlayer() -- will kill the local player
 ```
 
 ## Functional Ways To Use :
