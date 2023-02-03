@@ -76,3 +76,8 @@ FindAllDescendants(Name, Path, IsA) -- Search from all the descendants from the 
 -- the third parameter is optional, its checking if the part that has been found is a "Part", "Text", "Model" or "Animation".
 FindAllChilds(Name, Path, IsA) -- same for here but its only childrens
 ```
+
+```lua
+Generate(length, numbers, lowercase, uppercase) -- will generate a code, length is how long you want the code to be. numbers, lowercase and uppercase
+-- are just booleans you can set to true and false depends if you want it in the code you are generating, you can skip that if you want all.
+```
