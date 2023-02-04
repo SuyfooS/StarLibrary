@@ -12,9 +12,9 @@ First Of All, There are many functions you can use to make scripting a lot easie
 Teleport To :
 ```lua
 TpTo(x, y, z, part) -- Cordinates, You can only use 3 numbers ! Not more or less or it will bring an error !
--- You can also Tp to instances ! Just put the path to it in the function and thats it!
--- Another way of use is to teleport a specific part, just leave empty if you want to teleport the character.
 ```
+You can also Tp to instances ! Just put the path to it in the function and thats it!
+Another way of use is to teleport a specific part, just leave empty if you want to teleport the character.
 
 Tween To :
 ```lua
@@ -22,8 +22,8 @@ TweenTo(type, seconds_speed, x, y, z) -- x, y and z are the cordinates and types
 -- For example :
 
 TweenTo(536, 29, 60, "Time", 50) -- seconds_speed is the time or the speed, depends on what type you selected !
--- You can also Tween to instances ! Just put the path to it in the function and thats it!
 ```
+You can also Tween to instances ! Just put the path to it in the function and thats it!
 
 Copy Cordinates :
 ```lua
