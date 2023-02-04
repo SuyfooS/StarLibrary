@@ -11,8 +11,9 @@ First Of All, There are many functions you can use to make scripting a lot easie
 
 Teleport To :
 ```lua
-TpTo(x, y, z) -- Cordinates, You can only use 3 numbers ! Not more or less or it will bring an error !
+TpTo(x, y, z, part) -- Cordinates, You can only use 3 numbers ! Not more or less or it will bring an error !
 -- You can also Tp to instances ! Just put the path to it in the function and thats it!
+-- Another way of use is to teleport a specific part, just leave empty if you want to teleport the character.
 ```
 
 Tween To :
