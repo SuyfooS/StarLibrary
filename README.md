@@ -9,7 +9,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/WanHubMan/StarLibrary
 ## Ways Of Use :
 First Of All, There are many functions you can use to make scripting a lot easier ! follow the introductions to make it work the best it can !
 
-Teleport To :
+###Teleport To :
 ```lua
 TpTo(x, y, z, part) -- Cordinates, You can only use 3 numbers ! Not more or less or it will bring an error !
 ```
