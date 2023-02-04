@@ -9,14 +9,14 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/WanHubMan/StarLibrary
 ## Ways Of Use :
 First Of All, There are many functions you can use to make scripting a lot easier ! follow the introductions to make it work the best it can !
 
-###Teleport To :
+- Teleport To :
 ```lua
 TpTo(x, y, z, part) -- Cordinates, You can only use 3 numbers ! Not more or less or it will bring an error !
 ```
 You can also Tp to instances ! Just put the path to it in the function and thats it!
 Another way of use is to teleport a specific part, just leave empty if you want to teleport the character.
 
-Tween To :
+- Tween To :
 ```lua
 TweenTo(type, seconds_speed, x, y, z) -- x, y and z are the cordinates and types are "Time" and "Speed",
 -- For example :
@@ -25,7 +25,7 @@ TweenTo(536, 29, 60, "Time", 50) -- seconds_speed is the time or the speed, depe
 ```
 You can also Tween to instances ! Just put the path to it in the function and thats it!
 
-Copy Cordinates :
+- Copy Cordinates :
 ```lua
 --You can use this to copy cordinates quick,
 CopyCordinates(cf_v3) -- here you should write if you want to copy the whole "CFrame" number or "Vector3"!
@@ -34,21 +34,21 @@ CopyCordinates("Vector3") -- Should bring 3 numbers like : 305, 693, 52
 -- Vector3 is also the default so you can put nothing in it too
 ```
 
-Change WalkSpeed & JumpPower :
+- Change WalkSpeed & JumpPower :
 ```lua
 -- Pretty simple.
 ChangeWalkSpeed(number) -- put in "number" the number of speed you want to change to
 ChangeJumpPower(number) -- Same here
 ```
 
-Fly :
+- Fly :
 ```lua
 -- You can use this to toggle off and on flying
 ToggleFly() -- Will toggle fly, on and off 
 -- To set fly max speed you can do :
 FlyMaxSpeed(number) -- put here the number of speed you want :)
 ```
-Some Misc Features :
+- Some Misc Features :
 ```lua
 HopServer() -- Will hop a server 
 Rejoin() -- Will rejoin the same server
@@ -61,7 +61,7 @@ KillPlayer() -- will kill the local player
 ToggleNoclip(boolean) -- set to true or false depends if you want noclip on or off
 ```
 
-## Functional Ways To Use :
+- Functional Ways To Use :
 
 ```lua
 getPlayerCFrame() -- Will return the cframe of the player
@@ -75,7 +75,7 @@ getInstancePosition(Instance) -- Will return the Position of the instance you pu
 ```lua
 getDistance(path1, path2) -- will return the distance between 1 point(path) to the 2 point(path).
 ```
-More Functional Ways :
+- More Functional Ways :
 ```lua
 FindAllDescendants(Name, Path, IsA) -- Search from all the descendants from the path you selected to find the object that you selected the name of,
 -- the third parameter is optional, its checking if the part that has been found is a "Part", "Text", "Model" or "Animation".
