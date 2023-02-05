@@ -21,7 +21,7 @@ Another way of use is to teleport a specific part, just leave empty if you want 
 s_TweenTo(type, seconds_speed, x, y, z) -- x, y and z are the cordinates and types are "Time" and "Speed",
 -- For example :
 
-TweenTo(536, 29, 60, "Time", 50) -- seconds_speed is the time or the speed, depends on what type you selected !
+s_TweenTo(536, 29, 60, "Time", 50) -- seconds_speed is the time or the speed, depends on what type you selected !
 ```
 You can also Tween to instances ! Just put the path to it in the function and thats it!
 
