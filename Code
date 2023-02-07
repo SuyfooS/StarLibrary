@@ -1,54 +1,542 @@
 -- This is a project I built to help starter scripters get things and use things a little easier.
 -- Have fun :)
+local HopServer552c5ggf32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/Morples/Server-hop/main/Script"))
+
 local player = game.Players.LocalPlayer
 local TS = game:GetService("TweenService")
+local plr = game.Players.LocalPlayer
+local mousef = game.Players.LocalPlayer:GetMouse()
+local vim = game:GetService('VirtualInputManager')
 
+getgenv().gfj32n3jjc8 = math.random(11111, 99999)
+
+pcall(function()
+    local UpperTorso = plr.Character.UpperTorso
+end)
+-- Flying Related >
+local flying = false
+local deb = true
+local maxspeed = 50
+local speed = 0
+
+local Noclip = false
 local HumRootPart = player.Character.HumanoidRootPart
-local Humanoid = player.Character.HumanoidRootPart
+local Humanoid = player.Character.Humanoid
 
 -- // Tp And Tween Section
-function TpToV3(x, y, z)
+function s_TpTo(x, y, z, part)
     task.spawn(function()
-        Humanoid:PivotTo(CFrame.new(x, y, z))
+        if part ~= nil then
+            if y ~= nil then
+                part:PivotTo(CFrame.new(x, y, z))
+            else
+                part:PivotTo(x.CFrame)
+            end
+        else
+            if y ~= nil then
+                HumRootPart:PivotTo(CFrame.new(x, y, z))
+            else
+                HumRootPart:PivotTo(x.CFrame)
+            end
+        end
     end)
 end
 
-function tweenToSpeed(x, y, z)
+function s_TweenTo(type, secondsorspeed, x, y, z)
     task.spawn(function()
-        local targetPos = CFrame.new(x, y, z)
-        local distance = (player.Character.HumanoidRootPart.Position - targetPos.Position).Magnitude
-        local time = distance / 100 -- Speed
+        if y ~= nil then
+            if type == "Time" then
+                local tween = TS:Create(player.Character.HumanoidRootPart,
+                    TweenInfo.new(secondsorspeed, Enum.EasingStyle.Linear), {
+                        CFrame = CFrame.new(x, y, z)
+                    })
+                tween:Play()
+            else
+                if type == "Speed" or type == nil then
+                    local targetPos = CFrame.new(x, y, z)
+                    local distance = (player.Character.HumanoidRootPart.Position - targetPos.Position).Magnitude
+                    local time = distance / secondsorspeed -- Speed
 
-        local tween = TS:Create(player.Character.HumanoidRootPart, TweenInfo.new(time, Enum.EasingStyle.Linear), {
-            CFrame = targetPos
-        })
-        tween:Play()
-    end)
-end
+                    local tween = TS:Create(player.Character.HumanoidRootPart,
+                        TweenInfo.new(time, Enum.EasingStyle.Linear), {
+                            CFrame = targetPos
+                        })
+                    tween:Play()
+                end
+            end
+        else
+            if type == "Time" then
+                local tween = TS:Create(player.Character.HumanoidRootPart,
+                    TweenInfo.new(secondsorspeed, Enum.EasingStyle.Linear), {
+                        CFrame = x.CFrame
+                    })
+                tween:Play()
+            else
+                if type == "Speed" or type == nil then
+                    local targetPos = x.CFrame
+                    local distance = (player.Character.HumanoidRootPart.Position - targetPos.Position).Magnitude
+                    local time = distance / secondsorspeed -- Speed
 
-function tweenToTime(x, y, z, seconds)
-    task.spawn(function()
-        local tween = TS:Create(player.Character.HumanoidRootPart, TweenInfo.new(seconds, Enum.EasingStyle.Linear), {
-            CFrame = CFrame.new(x, y, z)
-        })
-        tween:Play()
+                    local tween = TS:Create(player.Character.HumanoidRootPart,
+                        TweenInfo.new(time, Enum.EasingStyle.Linear), {
+                            CFrame = targetPos
+                        })
+                    tween:Play()
+                end
+            end
+        end
     end)
 end
 
 -- // Copy Cordinates Section
-function CopyCFrameCordinates()
+function s_CopyCordinates(cf_v3)
     task.spawn(function()
-        setclipboard(tostring(HumRootPart.CFrame))
+        if cf_v3 == "CFrame" then
+            setclipboard(tostring(HumRootPart.CFrame))
+        else
+            if cf_v3 == "Vector3" or cf_v3 == nil then
+                local number = tostring(HumRootPart.CFrame)
+                local string = tostring(number) -- or the string functions wont work
+                local x = string.split(string, ",")[1] -- gets the first word before (.)
+                local y = string.split(string, ",")[2]
+                local z = string.split(string, ",")[3]
+                setclipboard(x .. ", " .. y .. ", " .. z)
+            end
+        end
     end)
 end
 
-function CopyV3Cordinates()
+-- // Change WalkSpeed/JumpPower
+function s_setWalkSpeed(WS)
     task.spawn(function()
-        local number = tostring(HumRootPart.CFrame)
-        local string = tostring(number) -- or the string functions wont work
-        local x = string.split(string, ",")[1] -- gets the first word before (.)
-        local y = string.split(string, ",")[2]
-        local z = string.split(string, ",")[3]
-        setclipboard(x .. ", " .. y .. ", " .. z)
+        Humanoid.WalkSpeed = WS
+    end)
+end
+
+function s_setJumpPower(JP)
+    task.spawn(function()
+        Humanoid.JumpPower = JP
+    end)
+end
+
+-- // Fly
+local ctrl = {
+    f = 0,
+    b = 0,
+    l = 0,
+    r = 0
+}
+local lastctrl = {
+    f = 0,
+    b = 0,
+    l = 0,
+    r = 0
+}
+
+function Fly_593h33vm()
+    task.spawn(function()
+        local bg = Instance.new("BodyGyro", UpperTorso)
+        bg.P = 9e4
+        bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+        bg.cframe = UpperTorso.CFrame
+        local bv = Instance.new("BodyVelocity", UpperTorso)
+        bv.velocity = Vector3.new(0, 0.1, 0)
+        bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+        repeat
+            wait()
+            plr.Character.Humanoid.PlatformStand = true
+            if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
+                speed = speed + .5 + (speed / maxspeed)
+                if speed > maxspeed then
+                    speed = maxspeed
+                end
+            elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
+                speed = speed - 1
+                if speed < 0 then
+                    speed = 0
+                end
+            end
+            if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
+                bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f + ctrl.b)) +
+                                  ((game.Workspace.CurrentCamera.CoordinateFrame *
+                                      CFrame.new(ctrl.l + ctrl.r, (ctrl.f + ctrl.b) * .2, 0).p) -
+                                      game.Workspace.CurrentCamera.CoordinateFrame.p)) * speed
+                lastctrl = {
+                    f = ctrl.f,
+                    b = ctrl.b,
+                    l = ctrl.l,
+                    r = ctrl.r
+                }
+            elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
+                bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f + lastctrl.b)) +
+                                  ((game.Workspace.CurrentCamera.CoordinateFrame *
+                                      CFrame.new(lastctrl.l + lastctrl.r, (lastctrl.f + lastctrl.b) * .2, 0).p) -
+                                      game.Workspace.CurrentCamera.CoordinateFrame.p)) * speed
+            else
+                bv.velocity = Vector3.new(0, 0.1, 0)
+            end
+            bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame *
+                            CFrame.Angles(-math.rad((ctrl.f + ctrl.b) * 50 * speed / maxspeed), 0, 0)
+        until not flying
+        ctrl = {
+            f = 0,
+            b = 0,
+            l = 0,
+            r = 0
+        }
+        lastctrl = {
+            f = 0,
+            b = 0,
+            l = 0,
+            r = 0
+        }
+        speed = 0
+        bg:Destroy()
+        bv:Destroy()
+        plr.Character.Humanoid.PlatformStand = false
+    end)
+end
+
+mousef.KeyDown:connect(function(key)
+    task.spawn(function()
+        if key:lower() == "w" then
+            ctrl.f = 1
+        elseif key:lower() == "s" then
+            ctrl.b = -1
+        elseif key:lower() == "a" then
+            ctrl.l = -1
+        elseif key:lower() == "d" then
+            ctrl.r = 1
+        end
+    end)
+end)
+mousef.KeyUp:connect(function(key)
+    task.spawn(function()
+        if key:lower() == "w" then
+            ctrl.f = 0
+        elseif key:lower() == "s" then
+            ctrl.b = 0
+        elseif key:lower() == "a" then
+            ctrl.l = 0
+        elseif key:lower() == "d" then
+            ctrl.r = 0
+        end
+    end)
+end)
+
+function s_ToggleFly()
+    task.spawn(function()
+        if flying then
+            flying = false
+            return "Flying Off"
+        else
+            flying = true
+            Fly_593h33vm()
+            return "Flying On"
+        end
+    end)
+end
+
+function s_FlyMaxSpeed(MaxSpeed)
+    task.spawn(function()
+        maxspeed = MaxSpeed
+    end)
+end
+
+-- // Misc
+function s_HopServer()
+    task.spawn(function()
+        HopServer552c5ggf32()
+    end)
+end
+
+function s_Rejoin()
+    task.spawn(function()
+        game:GetService 'TeleportService':TeleportToPlaceInstance(game.PlaceId, game.JobId,
+            game:GetService 'Players'.LocalPlayer)
+    end)
+end
+
+function s_ToggleNoclip(boolean)
+    task.spawn(function()
+        game:GetService("RunService").Stepped:Connect(function()
+            pcall(function()
+                for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                    if v.ClassName == "Part" or v.ClassName == "MeshPart" then
+                        if boolean == true then
+                            v.CanCollide = false
+                        else
+                            if boolean == false then
+                                v.CanCollide = true
+                            end
+                        end
+                    end
+                end
+            end)
+        end)
+    end)
+end
+
+function s_SendMessage(text)
+    task.spawn(function()
+        local GlobalMessage = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+        GlobalMessage:FireServer(text, "All")
+    end)
+end
+
+function s_KillPlayer()
+    task.spawn(function()
+        Humanoid.Health = 0
+    end)
+end
+
+function s_MaxBrightness()
+    task.spawn(function()
+        local Light = game:GetService("Lighting")
+        Light.Ambient = Color3.new(1, 1, 1)
+        Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+        Light.ColorShift_Top = Color3.new(1, 1, 1)
+    end)
+end
+
+function s_FPSCounter(boolean)
+    task.spawn(function()
+        local coreGui = game.CoreGui
+        if game.CoreGui:FindFirstChild(getgenv().gfj32n3jjc8) then
+            coreGui[getgenv().gfj32n3jjc8].Fps.Visible = boolean
+            coreGui[getgenv().gfj32n3jjc8].Ping.Visible = boolean
+        else
+            local ScreenGui = Instance.new("ScreenGui")
+            local Fps = Instance.new("TextLabel")
+            local Ping = Instance.new("TextLabel")
+
+            ScreenGui.Parent = game.CoreGui
+            ScreenGui.Name = getgenv().gfj32n3jjc8
+            ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+            Fps.Name = "Fps"
+            Fps.Parent = ScreenGui
+            Fps.Visible = boolean
+            Fps.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            Fps.BackgroundTransparency = 1.000
+            Fps.Position = UDim2.new(0.786138654, 0, 0, 0)
+            Fps.Size = UDim2.new(0, 125, 0, 25)
+            Fps.Font = Enum.Font.Roboto
+            Fps.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Fps.TextScaled = true
+            Fps.TextSize = 14.000
+            Fps.TextWrapped = true
+            Fps.TextStrokeTransparency = 0.000
+            Fps.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+            Ping.Name = "Ping"
+            Ping.Parent = ScreenGui
+            Ping.Visible = boolean
+            Ping.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            Ping.BackgroundTransparency = 1.000
+            Ping.BorderColor3 = Color3.fromRGB(255, 255, 255)
+            Ping.Position = UDim2.new(0.700000048, 0, 0, 0)
+            Ping.Size = UDim2.new(0, 125, 0, 25)
+            Ping.Font = Enum.Font.Roboto
+            Ping.TextColor3 = Color3.fromRGB(253, 253, 253)
+            Ping.TextScaled = true
+            Ping.TextSize = 14.000
+            Ping.TextWrapped = true
+            Ping.TextStrokeTransparency = 0.000
+            Ping.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+            local script = Instance.new('LocalScript', Fps)
+            local RunService = game:GetService("RunService")
+            RunService.RenderStepped:Connect(function(frame) -- This will fire every time a frame is rendered
+                script.Parent.Text = ("FPS: " .. math.round(1 / frame))
+            end)
+
+            local script = Instance.new('LocalScript', Ping)
+            local RunService = game:GetService("RunService")
+            RunService.RenderStepped:Connect(function(ping)
+                script.Parent.Text = ("Ping: " ..
+                                         game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString(
+                        math.round(2 / ping))) -- your ping
+            end)
+        end
+    end)
+end
+
+function s_LowQuality()
+    task.spawn(function()
+        local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+        local g = game
+        local w = g.Workspace
+        local l = g.Lighting
+        local t = w.Terrain
+        t.WaterWaveSize = 0
+        t.WaterWaveSpeed = 0
+        t.WaterReflectance = 0
+        t.WaterTransparency = 0
+        l.GlobalShadows = false
+        l.FogEnd = 9e9
+        l.Brightness = 0
+        settings().Rendering.QualityLevel = "Level01"
+        for i, v in pairs(g:GetDescendants()) do
+            if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+            elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+                v.Transparency = 1
+            elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            elseif v:IsA("Explosion") then
+                v.BlastPressure = 1
+                v.BlastRadius = 1
+            elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                v.Enabled = false
+            elseif v:IsA("MeshPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+                v.TextureID = 10385902758728957
+            end
+        end
+        for i, e in pairs(l:GetChildren()) do
+            if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or
+                e:IsA("DepthOfFieldEffect") then
+                e.Enabled = false
+            end
+        end
+    end)
+end
+
+-- // Functional Stuff
+function s_getPlayerCFrame(playername)
+    if playername ~= nil then
+        return game.Players[playername].Character.HumanoidRootPart.CFrame
+    else
+        return HumRootPart.CFrame
+    end
+end
+
+function s_getPlayerPosition(playername)
+    if playername ~= nil then
+        return game.Players[playername].Character.HumanoidRootPart.Position
+    else
+        return HumRootPart.Position
+    end
+end
+
+function s_getInstanceCFrame(Instance)
+    return Instance.CFrame
+end
+
+function s_getInstancePosition(Instance)
+    return Instance.Position
+end
+
+function s_getDistance(path1, path2)
+    return (path1.Position - path2.Position).Magnitude
+end
+
+function s_FindAllDescendants(Name, Path, Isa)
+    for i, v in pairs(Path:GetDescendants()) do
+        if Isa ~= nil then
+            if v:IsA(Isa) then
+                if v.Name == Name then
+                    return true
+                end
+            end
+        else
+            if v.Name == Name then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function s_FindAllChilds(Name, Path, Isa)
+    for i, v in pairs(Path:GetChildren()) do
+        if Isa ~= nil then
+            if v:IsA(Isa) then
+                if v.Name == Name then
+                    return true
+                end
+            end
+        else
+            if v.Name == Name then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function s_setMaterial(_Material, Instance)
+    task.spawn(function()
+        Instance.Material = _Material
+    end)
+end
+
+function s_getMaterial(Instance)
+    local str = Instance.Material
+    local string = tostring(Instance.Material)
+    local result = string.split(string, ".")[3] -- gets the first word before (.)
+    return result
+end
+
+function s_IsAMaterial(_Material, Instance)
+    local str = Instance.Material
+    local string = tostring(Instance.Material)
+    local result = string.split(string, ".")[3] -- gets the first word before (.)
+    if result == _Material then
+        return true
+    else
+        return false
+    end
+end
+
+function s_Generate(length, withnumbers, withlowercase, withuppercase)
+    local upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    local lowerCase = "abcdefghijklmnopqrstuvwxyz"
+    local numbers = "0123456789"
+    local nothing = ""
+
+    function checkN()
+        if withnumbers == false then
+            return nothing
+        else
+            return numbers
+        end
+    end
+
+    function checkU()
+        if withuppercase == false then
+            return nothing
+        else
+            return upperCase
+        end
+    end
+
+    function checkL()
+        if withlowercase == false then
+            return nothing
+        else
+            return lowerCase
+        end
+    end
+    local characterSet = checkU() .. checkL() .. checkN()
+
+    local keyLength = length
+    local output = ""
+
+    for i = 1, keyLength do
+        local rand = math.random(#characterSet)
+        output = output .. string.sub(characterSet, rand, rand)
+    end
+    return output
+end
+
+function s_PressKey(key, seconds)
+    task.spawn(function()
+    vim:SendKeyEvent(true, Enum.KeyCode[key], false, game)
+    wait(seconds)
+    vim:SendKeyEvent(false, Enum.KeyCode[key], false, game)
     end)
 end
